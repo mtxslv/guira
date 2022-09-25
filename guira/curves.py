@@ -131,8 +131,6 @@ class CubicPolynomials:
         return [x_lambda, y_lambda, theta_lambda]
 
     def get_curve_points(self, how_many_points=10):
-        # this function returns how_many_points in configuration form (position and orientation)
-        # in a 2D numpy array
         """This method is used to compute the points' configuration over the polynomial curve. The amount
             of points over the polynomial curve is defined with how_many_points.
 
