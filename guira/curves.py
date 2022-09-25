@@ -186,6 +186,8 @@ class Lemniscate:
         Raises:
             ValueError: raised when a_x is not inside the interval (0 , 2.5]
             ValueError: raised when a_y is not inside the interval (0 , 2.5]
+            ValueError: raised when f_x is not positive
+            ValueError: raised when f_y is not positive
         """
         
         if a_x > 0 and a_x <= 2.5:
