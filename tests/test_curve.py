@@ -1,10 +1,51 @@
+import math
+
 import numpy as np
 import pytest
+
 from guira.curves import CubicPolynomials, Lemniscate
 
 # Cubic Polynomials
 
+@pytest.mark.parametrize('initial_config,final_config',[
+    ([1,2,math.pi/2],[1,2,math.pi/2]),
+    ([1,2,math.pi/2],[1,2,math.pi]),
+    ([1,2,math.pi],[1,2,math.pi/2]),
+    ([1,2,3],[1,2,3])
+])
+def test_cubic_polynomials_attributes(initial_config,final_config):
+    cubic_polynomial = CubicPolynomials(initial_config, final_config)
+    assert_sentence = hasattr(cubic_polynomial,'initial_x') and hasattr(cubic_polynomial,'initial_y') and hasattr(cubic_polynomial,'initial_theta') 
+    assert_sentence = assert_sentence and hasattr(cubic_polynomial,'final_x') and hasattr(cubic_polynomial,'final_y') and hasattr(cubic_polynomial,'final_theta') 
+    assert_sentence = assert_sentence and hasattr(cubic_polynomial,'x_curve_parameters') and hasattr(cubic_polynomial,'y_curve_parameters')
+    assert assert_sentence
 
+def test_cubic_polynomials_get_point():
+    initial_config = [1,2,math.pi/2]
+    final_config = [1,2,math.pi/2]
+    cubic_polynomial = CubicPolynomials(initial_config, final_config)
+    expected_ans = [1, 2, 1.5707963267948966]
+    assert cubic_polynomial.get_point(1) == expected_ans
+
+def test_cubic_polynomials_get_curve_points():
+    initial_config = [1,2,math.pi/2]
+    final_config = [1,2,math.pi/2]
+    cubic_polynomial = CubicPolynomials(initial_config, final_config)
+    
+    expected_ans = np.array([[0.        , 1.        , 2.        , 1.57079633],
+                             [0.25      , 1.        , 2.        , 1.57079633],
+                             [0.5       , 1.        , 2.        , 1.57079633],
+                             [0.75      , 1.        , 2.        , 1.57079633],
+                             [1.        , 1.        , 2.        , 1.57079633]])
+
+    assert (np.round(cubic_polynomial.get_curve_points(5),8) == expected_ans).all()
+
+def test_cubic_polynomials_distance():
+    initial_config = [-10,0,math.pi/2]
+    final_config = [10,10,0]
+    cp = CubicPolynomials(initial_config,final_config)
+    assert cp.get_distance_between_points(1,[10,0]) == 10.0
+    
 
 # Lemniscate
 

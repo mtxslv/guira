@@ -151,9 +151,7 @@ class CubicPolynomials:
         return np.array(points)
 
     def get_distance_between_points(self, lambda_parameter, point):
-        # this function returns the distance_between_points 
-        # between a point and a point in the curve (parametrized by lmb)
-        """This method is used to compute the distance between a point and a parametrized point in the curve.
+        """This method is used to compute the distance between an arbitrary point and a parametrized point in the curve.
 
         Args:
             lambda_parameter (float): polynomials' input, ranging from 0 to 1
