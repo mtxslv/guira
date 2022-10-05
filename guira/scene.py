@@ -5,25 +5,55 @@ from guira import sim # simulation lib
 from guira.guira_exceptions import SimulatorException 
 
 class Scene:
-    def __init__(self,):
-        """Scene instancing. 
-        """
-        pass
+    def __init__(self):
+        """Scene obj instancing.  
 
-    def connect_to_sim(self,):
-        """Close all opened connections and connects the code with the simulator API,
-           if it is already running.
+        Returns:
+            None
+        """
+        return None
+
+    def connect(self,
+                connection_addr = '127.0.0.1',
+                connection_port=19999, 
+                wait_until_connected = True,
+                do_not_reconnect = True,
+                timeout_ms = 5000,
+                comm_thread_cycle_ms = 5):
+        """
+        Close all opened connections and connects to the simulator API (if it is already running).
+
+        Args:
+            connection_addr (str, optional): CoppeliaSim server ip. Defaults to '127.0.0.1'.
+            connection_port (int, optional): Port number to connect (same as defined in simulation scene). Defaults to 19999.
+            wait_until_connected (bool, optional): if True, function blocks until connected. Defaults to True.
+            do_not_reconnect (bool, optional): if True, a new connection attempt is not tried (if connection was lost). Defaults to True.
+            timeout_ms (int, optional): miliseconds time-out for the first connection atempt (if positive). If negative, the positive 
+                                        value is the time-out for block function calls. For more information please read the remoteApi docs. Defaults to 5000.
+            comm_thread_cycle_ms (int, optional): how often data packets are sent back and forth. Defaults to 5.
 
         Raises:
             SimulatorException: Raised if not successfully connected.
-        
+
         Returns:
             clientID(int): the client ID.
         """
 
+        self.connection_address = connection_addr
+        self.connection_port = connection_port
+        self.wait_until_connected = wait_until_connected
+        self.do_not_reconnect = do_not_reconnect
+        self.timeout_ms = timeout_ms
+        self.comm_thread_cycle_ms = comm_thread_cycle_ms
+
         sim.simxFinish(-1) # just in case, close all opened connections
 
-        clientID = sim.simxStart('127.0.0.1',19999,True,True,5000,5) # Connect to CoppeliaSim
+        clientID = sim.simxStart(self.connection_address,
+                                 self.connection_port,
+                                 self.wait_until_connected,
+                                 self.do_not_reconnect,
+                                 self.timeout_ms,
+                                 self.comm_thread_cycle_ms) # Connect to CoppeliaSim
 
         if clientID != -1:
             print('Connected to remote API server')
@@ -35,16 +65,16 @@ class Scene:
     
     def test_connection(self,):
         """Tests if the connection was successful. If so, the number of objects in the scene is 
-           displayed on the terminal.
+           returned.
         """
         res, objs = sim.simxGetObjects(self.clientID,
                                        sim.sim_handle_all,
                                        sim.simx_opmode_blocking)
                                 
         if res==sim.simx_return_ok:
-            print('Number of objects in the scene: ',len(objs))
+            return len(objs)
         else:
-            print('Remote API function call returned with error code: ',res)
+            raise SimulatorException('Remote API function call returned with error code: ',res)
 
     def send_points_to_sim(self, points, sleep_time = 0.07):
         #the bigger the sleep time the more accurate the points are 
