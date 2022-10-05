@@ -3,7 +3,7 @@ import struct
 import sys
 import os
 import ctypes as ct
-from simConst import *
+from  guira.simConst import * # explain this
 
 #load library
 libsimx = None
