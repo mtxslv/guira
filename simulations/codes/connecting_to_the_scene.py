@@ -1,5 +1,5 @@
 # To run this tutorial do:
-# Open the Scene connecting_to_the_scene.ttt
+# Open the Scene connecting_to_the_scene.ttt in CoppeliaSim Edu V4.3.0
 # Or...
 # 1. Open a new scene in CoppeliaSim Edu V4.3.0
 # 2. At the end of the scene's main script, add: simRemoteApi.start(19999)
