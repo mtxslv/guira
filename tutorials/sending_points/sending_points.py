@@ -18,13 +18,15 @@
 import math
 
 from guira.scene import Scene
-from guira.curves import CubicPolynomials
+from guira.curves import CubicPolynomials, Lemniscate
 
 def main():
     scene = Scene()
     scene.connect()
     how_many_objs = scene.test_connection()
     print(f'There are {how_many_objs} objects in the scene') # 15 objects
+
+    lem = Lemniscate(2.0,2.0)
 
     top_left = CubicPolynomials([0,0,math.pi],
                                [-2.5, 2.5, 0.75*math.pi])
@@ -33,13 +35,16 @@ def main():
     bottom_left = CubicPolynomials([0,0,math.pi],
                                [-2.5, -2.5, 1.25*math.pi])
     bottom_right = CubicPolynomials([0,0,0],
-                               [2.5, -2.5, -0.25*math.pi])                                                                                          
+                               [2.5, -2.5, -0.25*math.pi]) 
+
+    lem_points, _, _, _ =  lem.get_curve_points(300)                                                                                                                        
     
     points_top_left = top_left.get_curve_points(50)
     points_top_right = top_right.get_curve_points(50)
     points_bottom_right = bottom_right.get_curve_points(50)
     points_bottom_left = bottom_left.get_curve_points(50)
 
+    scene.send_points_to_sim(lem_points)
     scene.send_points_to_sim([p[1:3] for p in points_top_left])
     scene.send_points_to_sim([p[1:3] for p in points_top_right])
     scene.send_points_to_sim([p[1:3] for p in points_bottom_left])
