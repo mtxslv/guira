@@ -1,0 +1,43 @@
+# Send points to the Sim
+# For this tutorial, prepare the Sim to accept a connection
+# (i.e., add 'simRemoteApi.start(19999)' at the end of the
+# scene's main script). 
+# Also, add a associated non-threaded Lua child script on 
+# DefaultLights object (you can do it by right-clicking on
+# the object, and following Add -> Associated Child Script
+# -> Non-Threaded -> Lua). Copy the receiving_script.lua
+# content and paste on the associated child script.
+# Run the simulation and then run this file.
+
+import math
+
+from guira.scene import Scene
+from guira.curves import CubicPolynomials
+
+def main():
+    scene = Scene()
+    scene.connect()
+    how_many_objs = scene.test_connection()
+    print(f'There are {how_many_objs} objects in the scene') # 15 objects
+
+    top_left = CubicPolynomials([0,0,math.pi],
+                               [-2.5, 2.5, 0.75*math.pi])
+    top_right = CubicPolynomials([0,0,0],
+                               [2.5, 2.5, 0.25*math.pi])   
+    bottom_left = CubicPolynomials([0,0,math.pi],
+                               [-2.5, -2.5, 1.25*math.pi])
+    bottom_right = CubicPolynomials([0,0,0],
+                               [2.5, -2.5, -0.25*math.pi])                                                                                          
+    
+    points_top_left = top_left.get_curve_points(50)
+    points_top_right = top_right.get_curve_points(50)
+    points_bottom_right = bottom_right.get_curve_points(50)
+    points_bottom_left = bottom_left.get_curve_points(50)
+
+    scene.send_points_to_sim([p[1:3] for p in points_top_left])
+    scene.send_points_to_sim([p[1:3] for p in points_top_right])
+    scene.send_points_to_sim([p[1:3] for p in points_bottom_left])
+    scene.send_points_to_sim([p[1:3] for p in points_bottom_right])
+
+if __name__ == "__main__":
+    main()
