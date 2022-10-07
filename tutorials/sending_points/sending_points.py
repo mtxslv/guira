@@ -1,13 +1,19 @@
 # Send points to the Sim
-# For this tutorial, prepare the Sim to accept a connection
+
+# For this tutorial:
+# 1. Just open the scene sending_points.ttt on Coppelia
+# 2. Run this file
+# Or...
+# 1. Prepare the Sim to accept a connection
 # (i.e., add 'simRemoteApi.start(19999)' at the end of the
 # scene's main script). 
-# Also, add a associated non-threaded Lua child script on 
+# 2. Add a associated non-threaded Lua child script on 
 # DefaultLights object (you can do it by right-clicking on
 # the object, and following Add -> Associated Child Script
-# -> Non-Threaded -> Lua). Copy the receiving_script.lua
-# content and paste on the associated child script.
-# Run the simulation and then run this file.
+# -> Non-Threaded -> Lua).
+# 3. Copy the receiving_script.lua content and paste on 
+# the associated child script.
+# 4. Run the simulation and then run this file.
 
 import math
 
