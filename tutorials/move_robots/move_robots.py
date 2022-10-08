@@ -7,7 +7,12 @@
 # Go in Tools > Scripts. In the pop up 
 # screen disable both DR20 and P3DX 
 # scripts by clicking in the script 
-# property checkbox 'Disabled'.
+# property checkbox 'Disabled'. Move
+# the robots to a desired position using
+# the simulator's Objects' shift and 
+# rotation functionalities. 
+# Or... open move_robots.ttt file
+# Then, run this.
 
 import time
 
