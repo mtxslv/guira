@@ -22,8 +22,6 @@ class Robot:
                                                                           operationMode=sim.simx_opmode_blocking)                                 
         return return_value_left_motor_control,return_value_right_motor_control
 
-    def get_robot_handles(self,):
-        pass
     def get_configuration(self,):
         pass
     def get_bounding_box_corners_positions(self,):
