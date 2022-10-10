@@ -77,6 +77,18 @@ class Scene:
             raise SimulatorException('Remote API function call returned with error code: ',res)
 
     def send_points_to_sim(self, points, sleep_time = 0.07):
+        """Send points to simulator.
+
+        Args:
+            points (list): the points to be sent.
+            sleep_time (float, optional): The amount of time to wait between transmissions. 
+                                          The bigger this number is the more acurate the
+                                           points will be displayed. Defaults to 0.07.
+
+        Raises:
+            ValueError: raised when sleep time is smaller than 0.07
+            SimulatorException: raised when transmission is not successful.
+        """
         #the bigger the sleep time the more accurate the points are 
         #placed but you have to be very patient :D
         if sleep_time < 0.07:
@@ -104,11 +116,10 @@ class Scene:
         """This method returns the object handle.
 
         Args:
-            client_id (int): an ID related to the running simulation
             object_name (string): object's name as seen in the hierarchy tree.
 
         Raises:
-            RuntimeError: this error is raised when any of the error codes is not zero (returned when the handle is retrieved).
+            SimulatorException: this error is raised when any of the error codes is not zero (returned when the handle is retrieved).
 
         Returns:
             handle_obj (int):  an ID related to the simulated object.
@@ -125,7 +136,6 @@ class Scene:
         """This function returns the scene objects handlers.
 
         Args:
-            client_id (int): an ID related to the running simulation
             scene_objects (list): a list of scene objects' names whose handlers should be retrieved.
 
         Returns:
@@ -143,7 +153,6 @@ class Scene:
         """This function return compilled information regarding the scene's objects.
 
         Args:
-            client_id (int):  an ID related to the running simulation
             scene_objects (list): a list of scene objects' names whose handlers should be retrieved.
 
         Returns:
@@ -166,11 +175,10 @@ class Scene:
         """This function returns the object configuration (position and orientation vectors).
 
         Args:
-            client_id (int): an ID related to the running simulation
             object_handle (int): an ID related to the simulated object whose configuration will be retrieved 
 
         Raises:
-            RuntimeError: this error is raised when any of the error codes is not zero (returned when the vectors are retrieved).
+            SimulatorException: this error is raised when any of the error codes is not zero (returned when the vectors are retrieved).
 
         Returns:
             tuple: the position vector and the angle vector.
@@ -187,14 +195,14 @@ class Scene:
             raise SimulatorException('an inexpected error occurred when configuration were retrieved')
         return position_vector, angle_vector
 
-    def get_robot_from_info_list(self,info_list:list, object_name):
+    def get_robot_from_info_list(self,info_list:list, object_name:str):
         """This function separates the list of objects' dictionary from a object dictionary. 
            It does not alter the original list variable. 
            Notice info_list_copy is a list containing information about the obstacles.
 
         Args:
             info_list (list): robot info, the output of get_scene_objects_info()
-            obj_name (string): the object_name (dictionary keyword) 
+            obj_name (str): the object_name (dictionary keyword) 
 
         Raises:
             KeyError: raised when the robot_name is not found in info_list
