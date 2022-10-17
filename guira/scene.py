@@ -163,14 +163,12 @@ class Scene:
         """
         info_list = []
         for element in scene_objects:
-            current_obj_handle = self.get_object_handle(client_id=self.clientID, 
-                                                object_name=element)
-            position, angle = self.get_configuration(client_id=self.clientID,
-                                                object_handle=current_obj_handle)
-            current_dict = {'object_name': element,
-                            'object_handler': current_obj_handle,
-                            'object_position': position,
-                            'object_orientation':angle}
+            current_obj_handle = self.get_object_handle(object_name=element)
+            position, angle = self.get_configuration(object_handle=current_obj_handle)
+            current_dict = {'name': element,
+                            'handler': current_obj_handle,
+                            'position': position,
+                            'orientation':angle}
             info_list.append(current_dict)
         return info_list
 
