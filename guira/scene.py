@@ -1,6 +1,9 @@
 import ctypes
 import time
 
+import numpy as np
+import pandas as pd
+
 from guira import sim # simulation lib
 from guira.guira_exceptions import SimulatorException 
 
@@ -222,3 +225,5 @@ class Scene:
         if obj_key_was_not_found:
             raise KeyError("Object name was not found")
         return info_list_copy, info_robot
+
+    ################# FUNCTIONS FOR PROJECT 2, GOAL 1 #################################
