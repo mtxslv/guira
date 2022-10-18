@@ -196,32 +196,4 @@ class Scene:
             raise SimulatorException('an inexpected error occurred when configuration were retrieved')
         return position_vector, angle_vector
 
-    def get_robot_from_info_list(self,info_list:list, object_name:str):
-        """This function separates the list of objects' dictionary from a object dictionary. 
-           It does not alter the original list variable. 
-           Notice info_list_copy is a list containing information about the obstacles.
-
-        Args:
-            info_list (list): robot info, the output of get_scene_objects_info()
-            obj_name (str): the object_name (dictionary keyword) 
-
-        Raises:
-            KeyError: raised when the robot_name is not found in info_list
-
-        Returns:
-            (tuple): the list of dictionaries containing objects' information and the dictionary containing the robot information, in this order.
-        """
-        info_robot = info_list[0] # this assignment has no effect in code. It is meant for assigning a value to info_robot outside of the for loop scope 
-        obj_key_was_not_found = True
-        info_list_copy = info_list.copy()
-        for element in info_list_copy:
-            if element['object_name'] == object_name:
-                obj_key_was_not_found = False    
-                info_robot_position = info_list_copy.index(element)
-                info_robot = element
-                del info_list_copy[info_robot_position]
-        if obj_key_was_not_found:
-            raise KeyError("Object name was not found")
-        return info_list_copy, info_robot
-
     ################# FUNCTIONS FOR PROJECT 2, GOAL 1 #################################
