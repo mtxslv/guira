@@ -153,7 +153,7 @@ class Scene:
         return list_of_handlers
 
     def get_scene_objects_info(self, scene_objects:list):
-        """This function return compilled information regarding the scene's objects.
+        """This function return compilled information regarding the scene's objects. It wrapps get_object_handle() and get_configuration() to optimize list iteration.
 
         Args:
             scene_objects (list): a list of scene objects' names whose handlers should be retrieved.
