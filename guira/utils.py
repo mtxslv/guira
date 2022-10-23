@@ -1,12 +1,12 @@
 import numpy as np
 
-def rotation_matrix_from_euler_angles(phi=0, theta=0, psi=0, inverse = False): #angles in radians
+def rotation_matrix_from_euler_angles(phi:float=0, theta:float=0, psi:float=0, inverse:bool = False): #angles in radians
     """Computes the transformation matrix R = R_z(phi)*R_y(theta)*R_x(psi) or inv(R). R is the rotation matrix associated with the euler angles phi, theta and psi. This matrix maps the object frame to the global frame.
 
     Args:
-        phi (int, optional): rotation, in rad, around Z axis. Defaults to 0.
-        theta (int, optional): rotation, in rad, around Y axis. Defaults to 0.
-        psi (int, optional): rotation, in rad, around X axis. Defaults to 0.
+        phi (float): rotation, in rad, around Z axis. Defaults to 0.
+        theta (float): rotation, in rad, around Y axis. Defaults to 0.
+        psi (float): rotation, in rad, around X axis. Defaults to 0.
         inverse (bool, optional): if the inverse matrix should be returned instead of the regular matrix. Defaults to False.
 
     Raises:
@@ -37,11 +37,11 @@ def rotation_matrix_from_euler_angles(phi=0, theta=0, psi=0, inverse = False): #
     else:
         return rotation_matrix
 
-def to_global(point_in_originl_frame, euler_angles, frame_origin_position): #get_global_position():
+def local_to_global(point_in_object_frame:np.ndarray, euler_angles:list, frame_origin_position: np.ndarray): #get_global_position():
     """This function returns the global coordinates of a given point (described in object's reference frame). 
 
     Args:
-        point_in_robot_frame (numpy ndarray): a given point in the objects's reference frame (same shape as frame_origin_position)
+        point_in_object_frame (numpy ndarray): a given point in the objects's reference frame (same shape as frame_origin_position)
         euler_angles (list): the phi, theta, and psi (in this order) euler angles that map object's frame to global frame.
         frame_origin_position (numpy ndarray): the origin of object's reference frame (same shape as point_in_robot_frame), described in global frame.
 
@@ -54,12 +54,12 @@ def to_global(point_in_originl_frame, euler_angles, frame_origin_position): #get
 
     rotation_matrix = rotation_matrix_from_euler_angles(phi,theta,psi)
 
-    point_in_global_frame = np.matmul(rotation_matrix,point_in_originl_frame)
+    point_in_global_frame = np.matmul(rotation_matrix,point_in_object_frame)
     point_position = point_in_global_frame + frame_origin_position
 
     return point_position
 
-def local_to_global(local_coordinates, euler_angles, frame_origin_position): #map_local_coordinates_to_global_coordinates():
+def map_points_to_global(local_coordinates:tuple, euler_angles:list, frame_origin_position:np.ndarray): #map_local_coordinates_to_global_coordinates():
     """This method takes coordinates in a local reference frame (i.e., robot) and map them to the global reference frame.
 
     Args:
@@ -72,11 +72,11 @@ def local_to_global(local_coordinates, euler_angles, frame_origin_position): #ma
     """
     global_points = []
     for local_point in local_coordinates:
-        global_point = to_global(local_point,euler_angles,frame_origin_position)
+        global_point = local_to_global(local_point,euler_angles,frame_origin_position)
         global_points.append(global_point)
     return global_points
 
-def get_normals_orientation(euler_z_angle, polygon_type = 'cubic'):
+def get_normals_orientation(euler_z_angle:float, polygon_type:str = 'cubic'):
     """This method returns the normals on a polygon's horizontal faces, considering one of the faces is aligned with the X axis.
 
     Args:
