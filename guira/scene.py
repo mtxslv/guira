@@ -6,6 +6,7 @@ import pandas as pd
 
 from guira import sim # simulation lib
 from guira.guira_exceptions import SimulatorException 
+from guira.utils import get_normals_orientation, map_points_to_global
 
 class Scene:
     def __init__(self):
@@ -39,7 +40,7 @@ class Scene:
             SimulatorException: Raised if not successfully connected.
 
         Returns:
-            clientID(int): the client ID.
+            client_id(int): the client ID.
         """
 
         self.connection_address = connection_addr
@@ -51,26 +52,26 @@ class Scene:
 
         sim.simxFinish(-1) # just in case, close all opened connections
 
-        clientID = sim.simxStart(self.connection_address,
+        client_id = sim.simxStart(self.connection_address,
                                  self.connection_port,
                                  self.wait_until_connected,
                                  self.do_not_reconnect,
                                  self.timeout_ms,
                                  self.comm_thread_cycle_ms) # Connect to CoppeliaSim
 
-        if clientID != -1:
+        if client_id != -1:
             print('Connected to remote API server')
         else:
             raise SimulatorException("Could not connect")
 
-        self.clientID = clientID   
-        return self.clientID     
+        self.client_id = client_id   
+        return self.client_id     
     
     def test_connection(self,):
         """Tests if the connection was successful. If so, the number of objects in the scene is 
            returned.
         """
-        res, objs = sim.simxGetObjects(self.clientID,
+        res, objs = sim.simxGetObjects(self.client_id,
                                        sim.sim_handle_all,
                                        sim.simx_opmode_blocking)
                                 
@@ -103,7 +104,7 @@ class Scene:
             packedData=sim.simxPackFloats(p.flatten())
             raw_bytes = (ctypes.c_ubyte * len(packedData)).from_buffer_copy(packedData) 
             
-            returnCode = sim.simxWriteStringStream(self.clientID,
+            returnCode = sim.simxWriteStringStream(self.client_id,
                                                    "point_coord",
                                                    raw_bytes,
                                                    sim.simx_opmode_oneshot)
@@ -127,7 +128,7 @@ class Scene:
         Returns:
             handle_obj (int):  an ID related to the simulated object.
         """
-        error_obj, handle_obj = sim.simxGetObjectHandle(clientID=self.clientID,
+        error_obj, handle_obj = sim.simxGetObjectHandle(clientID=self.client_id,
                                                         objectName=object_name,
                                                         operationMode=sim.simx_opmode_blocking)
         if error_obj != 0:
@@ -146,7 +147,7 @@ class Scene:
         """
         list_of_handlers = []
         for element in scene_objects:
-            current_obj_handle = self.get_object_handle(client_id=self.clientID, 
+            current_obj_handle = self.get_object_handle(client_id=self.client_id, 
                                                          object_name = element)
             current_dict = {element: current_obj_handle}
             list_of_handlers.append(current_dict)
@@ -184,11 +185,11 @@ class Scene:
         Returns:
             tuple: the position vector and the angle vector.
         """
-        position_error, position_vector = sim.simxGetObjectPosition(self.clientID,
+        position_error, position_vector = sim.simxGetObjectPosition(self.client_id,
                                                                     object_handle,
                                                                     -1, 
                                                                     sim.simx_opmode_blocking)
-        angle_error, angle_vector = sim.simxGetObjectOrientation(self.clientID,
+        angle_error, angle_vector = sim.simxGetObjectOrientation(self.client_id,
                                                                  object_handle,
                                                                  -1, 
                                                                  sim.simx_opmode_blocking)
@@ -197,8 +198,131 @@ class Scene:
         return position_vector, angle_vector
 
     ################# FUNCTIONS FOR PROJECT 2, GOAL 1 #################################
-    def get_bounding_box(self, object_handle, frame='global'): # get_bounding_box_corners_local_coordinates
+    def get_bounding_box(self, 
+                         object_handle:int, 
+                         frame:str ='global', 
+                         parameter_id_type:str ='model', 
+                         consider_up_layer:bool = False): # get_bounding_box_corners_local_coordinates
         if frame != 'global' and frame != 'local':
             raise ValueError(f'Wrong Value of Frame')  
         else:
-            pass
+            local_coordinates = self.__get_bounding_box_corners_local_coordinates(object_handle, 
+                                                                                 parameter_id_type=parameter_id_type,
+                                                                                 consider_up_layer = consider_up_layer)
+            if frame == 'local':
+                return local_coordinates
+            else:
+                position_vector, angle_vector = self.get_configuration(object_handle=object_handle)
+                angle_vector = np.array(angle_vector).reverse()
+                global_coordinates = map_points_to_global(local_coordinates=local_coordinates,
+                                                          euler_angles=angle_vector,
+                                                          frame_origin_position=position_vector)
+                return global_coordinates
+
+                
+            
+            
+
+    def __get_bounding_box_corners_positions(self, object_handle, parameter_id_type='model'):
+        """This method returns the coordinates (on the robot's reference frame) of the two extreme corners of the bounding box.
+
+        Args:
+            object_handle (int): an ID related to the simulated object whose bounding box's corners will be retrieved 
+            parameter_id_type (str, optional): can be "model" or "object". Defaults to 'model'.
+
+        Raises:
+            RuntimeError: this error is raised when any of the error codes is not zero (returned when the corners are retrieved).
+            RuntimeError: this error is raised when any of the error codes is not zero (returned when the corners are retrieved). 
+            ValueError: this error is raised when the parameter_id_type is not one of the two types showed.
+
+        Returns:
+            tuple: the coordinates of the two extreme corners of the bounding box (min_x, min_y, min_z, max_x, max_y, max_z).
+        """
+        if parameter_id_type == 'model':
+            error_min_x, min_x = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_modelbbox_min_x,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_min_y, min_y = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_modelbbox_min_y,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_min_z, min_z =  sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_modelbbox_min_z,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_max_x, max_x = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_modelbbox_max_x,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_max_y, max_y = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_modelbbox_max_y,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_max_z, max_z = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_modelbbox_max_z,
+                                    operationMode=sim.simx_opmode_blocking)
+            if error_min_x+error_min_y+error_min_z+error_max_x+error_max_y+error_max_z != 0:
+                raise RuntimeError('an inexpected error occurred when corners were retrieved')
+        elif parameter_id_type == 'object':
+            error_min_x, min_x = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_objbbox_min_x,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_min_y, min_y = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_objbbox_min_y,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_min_z, min_z =  sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_objbbox_min_z,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_max_x, max_x = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_objbbox_max_x,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_max_y, max_y = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_objbbox_max_y,
+                                    operationMode=sim.simx_opmode_blocking)
+            error_max_z, max_z = sim.simxGetObjectFloatParameter(clientID=self.client_id,
+                                    objectHandle= object_handle,
+                                    parameterID=sim.sim_objfloatparam_objbbox_max_z,
+                                    operationMode=sim.simx_opmode_blocking)
+            if error_min_x+error_min_y+error_min_z+error_max_x+error_max_y+error_max_z != 0:
+                raise RuntimeError('an inexpected error occurred when corners were retrieved')
+        else:
+            raise ValueError('Invalid parameter')
+        return min_x, min_y, min_z, max_x, max_y, max_z
+    
+    def __get_bounding_box_corners_local_coordinates(self, object_handle, parameter_id_type='model', consider_up_layer = False):
+        """This method returns the coordinates of the bounding box corners, in the local reference frame. The order starts at the top right point and goes anti-clockwise until the down right point.
+
+        Args:
+            object_handle (int): an ID related to the simulated object whose bounding box's corners will be retrieved 
+            parameter_id_type (str, optional): can be "model" or "object". Defaults to 'model'.
+            consider_up_layer (boolean, optional): this indicates if the up layer points will be returned. Defaults to "False".
+
+        Returns:
+            tuple: vectors from point 1 to point 8
+        """
+        # the idea is to get the coordinates and return it anti-clockwise (to match mapping algorithm)
+        x_min, y_min, z_min, x_max, y_max, z_max = self.__get_bounding_box_corners_positions(object_handle,
+                                                                                            parameter_id_type)
+
+        # down layer points
+        point_1 = np.array([x_max,y_max,z_min])
+        point_2 = np.array([x_min,y_max,z_min])
+        point_3 = np.array([x_min,y_min,z_min])
+        point_4 = np.array([x_max,y_min,z_min])
+        
+        if consider_up_layer:
+            point_5 = np.array([x_max,y_max,z_max])
+            point_6 = np.array([x_min,y_max,z_max])
+            point_7 = np.array([x_min,y_min,z_max])
+            point_8 = np.array([x_max,y_min,z_max])
+            return point_1, point_2, point_3, point_4, point_5, point_6, point_7, point_8
+        
+        else:
+            return point_1, point_2, point_3, point_4
