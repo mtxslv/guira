@@ -197,3 +197,8 @@ class Scene:
         return position_vector, angle_vector
 
     ################# FUNCTIONS FOR PROJECT 2, GOAL 1 #################################
+    def get_bounding_box(self, object_handle, frame='global'): # get_bounding_box_corners_local_coordinates
+        if frame != 'global' and frame != 'local':
+            raise ValueError(f'Wrong Value of Frame')  
+        else:
+            pass
