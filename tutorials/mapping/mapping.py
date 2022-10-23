@@ -22,7 +22,9 @@ def main():
     print(f'Information about Robot {dr20_info["name"]}: \n\t handler:{dr20_info["handler"]}\n\t position:{dr20_info["position"]}\n\t orientation:{dr20_info["orientation"]}')
     for it in range(0,len(cuboids_info)):
         print(f'Information about {cuboids_info[it]["name"]}: \n\t handler:{cuboids_info[it]["handler"]}\n\t position:{cuboids_info[it]["position"]}\n\t orientation:{cuboids_info[it]["orientation"]}')
-    
+    a = scene.get_bounding_box(object_handle=dr20_info['handler'],
+                           frame='local')
+    print(len(a))
 
 if __name__ == '__main__':
     main()
