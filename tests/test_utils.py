@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from guira.utils import map_points_to_global, local_to_global, rotation_matrix_from_euler_angles
+from guira.utils import get_normals_orientation, map_points_to_global, local_to_global, rotation_matrix_from_euler_angles
 
 @pytest.mark.parametrize('if_inverse,return_rotation_matrix',[
     (False,[[0, -1, 0],
@@ -56,5 +56,20 @@ def test_map_points_to_global():
                                   [ 0.707, -0.707, 0]])
     ans = map_points_to_global(local_coordinates=local_coordinates,
                                euler_angles=[3.14/4,0,0],
-                               frame_origin_position=[0,0,0])      
-    assert (ans == final_coordinates).all()
+                               frame_origin_position=[0,0,0])
+    ans = np.round(ans, 3)                                 
+    assert (ans == final_coordinates).all()          
+
+def test_normals_orientation():
+    euler_angle = 3.14/4
+    y_angle, negative_x_angle, negative_y_angle, x_angle = get_normals_orientation(euler_z_angle=euler_angle)
+
+    x_angle = np.round(x_angle, 3)
+    y_angle = np.round(y_angle, 3)
+    negative_x_angle = np.round(negative_x_angle, 3)
+    negative_y_angle = np.round(negative_y_angle, 3)
+
+    assert x_angle == 0.785
+    assert y_angle == 2.356
+    assert negative_x_angle == 3.927
+    assert negative_y_angle == 5.497
