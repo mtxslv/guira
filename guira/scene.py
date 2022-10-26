@@ -207,13 +207,13 @@ class Scene:
             raise ValueError(f'Wrong Value of Frame')  
         else:
             local_coordinates = self.__get_bounding_box_corners_local_coordinates(object_handle, 
-                                                                                 parameter_id_type=parameter_id_type,
+                                                                                 parameter_id_type = parameter_id_type,
                                                                                  consider_up_layer = consider_up_layer)
             if frame == 'local':
                 return local_coordinates
             else:
                 position_vector, angle_vector = self.get_configuration(object_handle=object_handle)
-                angle_vector = np.array(angle_vector).reverse()
+                angle_vector = angle_vector.reverse()
                 global_coordinates = map_points_to_global(local_coordinates=local_coordinates,
                                                           euler_angles=angle_vector,
                                                           frame_origin_position=position_vector)
