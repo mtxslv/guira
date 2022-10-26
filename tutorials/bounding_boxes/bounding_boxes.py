@@ -24,7 +24,7 @@ def main():
         print(f'Information about {cuboids_info[it]["name"]}: \n\t handler:{cuboids_info[it]["handler"]}\n\t position:{cuboids_info[it]["position"]}\n\t orientation:{cuboids_info[it]["orientation"]}')
     a = scene.get_bounding_box(object_handle=dr20_info['handler'],
                            frame='local')
-    print(len(a))
+    print(a)
 
 if __name__ == '__main__':
     main()
