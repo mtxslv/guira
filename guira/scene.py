@@ -213,7 +213,7 @@ class Scene:
                 return local_coordinates
             else:
                 position_vector, angle_vector = self.get_configuration(object_handle=object_handle)
-                angle_vector = angle_vector.reverse()
+                angle_vector.reverse()
                 global_coordinates = map_points_to_global(local_coordinates=local_coordinates,
                                                           euler_angles=angle_vector,
                                                           frame_origin_position=position_vector)
