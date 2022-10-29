@@ -6,6 +6,8 @@
 # script. Rotate it such that the 3rd and 4th 
 # ultrasonic sensors will be facing the cuboid. 
 
+from time import sleep
+
 from guira.scene import Scene
 from guira.robot import Robot
 from guira.sensors import Ultrasonic
@@ -31,13 +33,17 @@ def main():
 
         ultrasonic_4th = Ultrasonic(client_id = client_id,
                                       sensor_handle = ultrasonic_4th_handle)
-
-        if (ultrasonic_3rd.read() + ultrasonic_4th.read()) 
-        print(f'ultrasonic readings: \n\t 3rd: {ultrasonic_3rd.read()}\n\t 4th: {ultrasonic_4th.read()}')
+        while True:
+            readings_avg = (ultrasonic_3rd.read() + ultrasonic_4th.read())/2  
+            print(f'Averaged Readings: {readings_avg}')
+            if readings_avg < 0.75:
+                p3dx.run(-1,-1)
+                print(f'Moving backwards')
+            elif readings_avg > 3:
+                p3dx.run(1,1)
+                print(f'Moving onwards')
+            sleep(1)
 
 
 if __name__ == '__main__':
     main()
-
-# PioneerP3DX/ultrasonicSensor[3]
-# PioneerP3DX/ultrasonicSensor[4]
