@@ -132,7 +132,7 @@ class Scene:
                                                         objectName=object_name,
                                                         operationMode=sim.simx_opmode_blocking)
         if error_obj != 0:
-            raise SimulatorException('something went wrong during object handle retrieval. Error code = {error_obj}')
+            raise SimulatorException(f'something went wrong during object handle retrieval. Error code = {error_obj}')
         else:
             return handle_obj
 
