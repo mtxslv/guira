@@ -2,9 +2,9 @@ import numpy as np
 
 from guira import sim # simulation lib
 
-class Ultrassonic():
+class Ultrasonic():
     def __init__(self, client_id : int, sensor_handle: int):
-        """An Ultrassonic Sensor object.
+        """An Ultrasonic Sensor object.
 
         Args:
             client_id (int): the scene's client id;
