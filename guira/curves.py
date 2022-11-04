@@ -2,7 +2,7 @@ import math
 import numpy as np
 
 # class needed for generating trajectories using Cubic Polynomials
-class CubicPolynomials:
+class CubicPolynomials: # https://repositorio.ufrn.br/bitstream/123456789/15417/1/DiogoPFP.pdf
     def __init__(self, initial_config, final_config):
         """This class computes cubic polynomials coefficients for trajectory generation. The parameters are the initial and final configuration, with the angle in radians.
 
