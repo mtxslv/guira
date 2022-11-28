@@ -22,8 +22,8 @@ Guira is meant to process CoppeliaSim's basic information, such that you can foc
 
 The folder `tutorials/` contain a lot of examples (each one shows an application). The folder contains both the code and the scene. You can open the scene with CoppeliaSim and run the simulation. Then you run the code with a python interpreter (the lib needs python 3.9 at least) and that is it! Here it goes a list of available examples:
 
-* `bounding_boxes` shows how to retrieve objects configuration, as well as the bounding boxes' corners positions;
 * `connecting_to_a_scene` explains how to connect to a simulation scene;
+* `bounding_boxes` shows how to retrieve objects configuration, as well as the bounding boxes' corners positions;
 * `moving_robots` teach you how to drive a robot;
 * `ultrasonic_sensor` shows how to read an ultrasonic sensor.
 
