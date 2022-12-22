@@ -26,7 +26,7 @@ def main():
 
         # ultrasonic sensors definition
         ultrasonic_3rd_handle = scene.get_object_handle('/PioneerP3DX/visible/ultrasonicSensor[3]')
-        ultrasonic_4th_handle = scene.get_object_handle('./PioneerP3DX/ultrasonicSensor[4]')  
+        ultrasonic_4th_handle = scene.get_object_handle('./PioneerP3DX/visible/ultrasonicSensor[4]')  
 
         ultrasonic_3rd = Ultrasonic(client_id = client_id,
                                       sensor_handle = ultrasonic_3rd_handle)
