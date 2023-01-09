@@ -1,6 +1,6 @@
 # Welcome! 👋👋
 
-Guira is a Python Library for Robotic Simulation with CoppeliaSim (EDU 4.3.0).
+Guira is a Python Library for Robotic Simulation with CoppeliaSim (EDU 4.3.0). It works as an interface to CoppeliaSim's Remote API, simplifying the basic use of the simulator.
 
 # 🤔 What does this lib do? 🤔
 
