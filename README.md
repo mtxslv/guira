@@ -5,7 +5,13 @@ Guira is a Python Library for Robotic Simulation with CoppeliaSim (EDU 4.3.0). I
 # 🤔 What does this lib do? 🤔
 
 Guira is meant to process CoppeliaSim's basic information, such that you can focus on your robotic algorithms. Here it goes a full list of Guira's capabilities:
-- Class Scene:
+
+- Module Curves:
+    - Create a parametric curve (Cubic Polynomials or Lemniscate);
+    - Generate points over those curves. 
+- Module Robot:
+    - Actuate the robot's motors to drive it around.
+- Module Scene:
     - Connect to a simulation scene;
     - Test if connection is ok;
     - Send points to simulator;
@@ -13,10 +19,9 @@ Guira is meant to process CoppeliaSim's basic information, such that you can foc
     - Retrieve an object's configuration (position and orientation);
     - Retrieve all objects' configurations;
     - Get an object's bounding box corners' points.
-- Class Robot:
-    - Actuate the robot's motors to drive it around.
-- Class Ultrasonic:
+- Module Sensors:
     - Read an ultrasonic sensor.
+
 
 # It seems amazing 🤩! But I have no idea how to start 😓. What should I do? 🧐
 
