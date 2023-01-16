@@ -1,3 +1,4 @@
+![Guira Cuckoo, by David Schenfeld](https://live.staticflickr.com/8117/8621923793_67f83e3a32_b.jpg)
 # Welcome! 👋👋
 
 Guira is a Python Library for Robotic Simulation with CoppeliaSim (EDU 4.3.0). It works as an interface to CoppeliaSim's Remote API, simplifying the basic use of the simulator.
