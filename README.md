@@ -44,3 +44,26 @@ If you have Poetry available in your system, you can do:
 
 ```poetry add git+https://github.com/mtxslv/guira```.
 
+# 👀 What about the tutorials/simulations? 👀
+
+Ok, you have installed the lib. Now you want to get the tutorials to starting playing around. You don't need to clone the repo or download each file manually. [There is a script for that](https://github.com/mtxslv/guira/blob/master/get_tutorials.sh). You can download the `get_tutorials` shell script directly or you can get it by running
+
+```shell
+curl https://raw.githubusercontent.com/mtxslv/guira/master/get_tutorials.sh --output get_tutorials.sh
+```
+
+in a terminal. Now you have the script responsible for copying the [./tutorials/](https://github.com/mtxslv/guira/tree/master/tutorials) folder available in your machine. 
+
+In order to mount the folder locally, allow the system to execute the script by running
+
+```shell
+chmod +x get_tutorials.sh
+```
+
+and run the script itself:
+
+```shell
+./get_tutorials.sh
+```
+
+**This will mount the tutorials in the folder you executed it**. So, if you are running the script inside _~/Videos_, the tutorials will be available in _~/Videos/tutorials/_.
