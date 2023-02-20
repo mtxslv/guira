@@ -23,17 +23,6 @@ Guira is meant to process CoppeliaSim's basic information, such that you can foc
 - Module Sensors:
     - Read an ultrasonic sensor.
 
-
-# It seems amazing 🤩! But I have no idea how to start 😓. What should I do? 🧐
-
-The folder `tutorials/` contain a lot of examples (each one shows an application). The folder contains both the code and the scene. You can open the scene with CoppeliaSim and run the simulation. Then you run the code with a python interpreter (the lib needs python 3.9 at least) and that is it! Here it goes a list of available examples:
-
-* `bounding_boxes` shows how to retrieve objects configuration, as well as the bounding boxes' corners positions;
-* `connecting_to_a_scene` explains how to connect to a simulation scene;
-* [`moving_robots`](https://youtu.be/07_oNcmhMhY) teach you how to drive a robot;
-* [`sending_points`](https://youtu.be/M4mCUekoWF8) exemplify the use of _Curves_ and _Scene_ package by generating a curve and sending some samples to the simulated scene;
-* `ultrasonic_sensor` shows how to read an ultrasonic sensor.
-
 #  👩‍💻 How to install? 👨‍💻
 
 In order to install the lib in a Linux based system, run:
@@ -44,7 +33,17 @@ If you have Poetry available in your system, you can do:
 
 ```poetry add git+https://github.com/mtxslv/guira```.
 
-# 👀 What about the tutorials/simulations? 👀
+# It seems amazing 🤩! But I have no idea how to start 😓. What should I do? 🧐
+
+The folder `tutorials/` contains a lot of examples (each one shows an application). The folder contains both the code and the scene. You can open the scene with CoppeliaSim and run the simulation. Then you run the code with a python interpreter (the lib needs python 3.9 at least) and that is it! Here it goes a list of available examples:
+
+* `bounding_boxes` shows how to retrieve objects configuration, as well as the bounding boxes' corners positions;
+* `connecting_to_a_scene` explains how to connect to a simulation scene;
+* [`moving_robots`](https://youtu.be/07_oNcmhMhY) teach you how to drive a robot;
+* [`sending_points`](https://youtu.be/M4mCUekoWF8) exemplify the use of _Curves_ and _Scene_ package by generating a curve and sending some samples to the simulated scene;
+* `ultrasonic_sensor` shows how to read an ultrasonic sensor.
+
+## 👀 Ok, but I don't want to download it by hand... 👀
 
 Ok, you have installed the lib. Now you want to get the tutorials to starting playing around. You don't need to clone the repo or download each file manually. [There is a script for that](https://github.com/mtxslv/guira/blob/master/get_tutorials.sh). You can download the `get_tutorials` shell script directly or you can get it by running
 
@@ -67,3 +66,13 @@ and run the script itself:
 ```
 
 **This will mount the tutorials in the folder you executed it**. So, if you are running the script inside _~/Videos_, the tutorials will be available in _~/Videos/tutorials/_.
+
+# ✍🏼 Some Last Words... ✍🏼
+
+Your feedback is much appreciated 🫂. If you developed something interesting using the lib, please consider showing the world. I introduced the lib in a [Medium post](https://medium.com/@mateus.d.assis.silva/learning-robotics-made-easier-536ec16a4b8a) and in [Linkedin](https://www.linkedin.com/posts/mateus-assis-013a46140_learning-robotics-made-easier-activity-7020390171539836929-mCQM?utm_source=share&utm_medium=member_desktop). If you want to share some thoughts, these places are great for it. 
+
+If you want to share your own project, don't be shy! You can tag [my Linkedin account](https://www.linkedin.com/in/mateus-assis-013a46140/) or [my Github](https://github.com/mtxslv/). If you find any bugs, or unexpected behaviour, submit an issue in the project. I'll answer it ASAP 😉
+
+#
+
+_**That said, happy coding!**_
