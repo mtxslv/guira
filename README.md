@@ -73,7 +73,9 @@ and run the script itself:
 
 If you developed something interesting using the lib, please consider showing the world. I introduced the lib in a [Medium post](https://medium.com/@mateus.d.assis.silva/learning-robotics-made-easier-536ec16a4b8a) and in [Linkedin](https://www.linkedin.com/posts/mateus-assis-013a46140_learning-robotics-made-easier-activity-7020390171539836929-mCQM?utm_source=share&utm_medium=member_desktop). If you want to share some thoughts, these places are great for it. 
 
-If you want to share your own project, don't be shy! You can tag [my Linkedin account](https://www.linkedin.com/in/mateus-assis-013a46140/) or [my Github](https://github.com/mtxslv/). If you find any bugs, or unexpected behaviour, submit an issue in the project. I'll answer it ASAP 😉
+If you want to share your own project, don't be shy! You can tag [my Linkedin account](https://www.linkedin.com/in/mateus-assis-013a46140/) or [my Github](https://github.com/mtxslv/). 
+
+If you find any bugs, or unexpected behaviour, submit an issue in the project. I'll answer it ASAP 😉
 
 #
 
