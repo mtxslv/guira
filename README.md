@@ -75,7 +75,7 @@ If you developed something interesting using the lib, please consider showing th
 
 If you want to share your own project, don't be shy! You can tag [my Linkedin account](https://www.linkedin.com/in/mateus-assis-013a46140/) or [my Github](https://github.com/mtxslv/). 
 
-If you find any bugs, or unexpected behaviour, submit an issue in the project. I'll answer it ASAP 😉
+If you find any bugs, or unexpected behaviour, submit an issue to the project. I'll answer it ASAP 😉
 
 #
 
