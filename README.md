@@ -27,11 +27,11 @@ Guira is meant to process CoppeliaSim's basic information, such that you can foc
 
 In order to install the lib in a Linux based system, run:
 
-```pip install guira```.
+```pip install guira```
 
 If you have Poetry available in your system, you can do:
 
-```poetry add guira```.
+```poetry add guira```
 
 # It seems amazing 🤩! But I have no idea how to start 😓. What should I do? 🧐
 
@@ -51,7 +51,7 @@ Ok, you have installed the lib. Now you want to get the tutorials to starting pl
 curl https://raw.githubusercontent.com/mtxslv/guira/master/get_tutorials.sh --output get_tutorials.sh
 ```
 
-in a terminal. Now you have the script responsible for copying the [./tutorials/](https://github.com/mtxslv/guira/tree/master/tutorials) folder available in your machine. 
+in a terminal. Now you have the script responsible for copying the [./tutorials/](https://github.com/mtxslv/guira/tree/master/tutorials) to your machine. 
 
 In order to mount the folder locally, allow the system to execute the script by running
 
