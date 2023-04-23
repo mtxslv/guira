@@ -27,11 +27,11 @@ Guira is meant to process CoppeliaSim's basic information, such that you can foc
 
 In order to install the lib in a Linux based system, run:
 
-```pip install git+https://github.com/mtxslv/guira```.
+```pip install guira```.
 
 If you have Poetry available in your system, you can do:
 
-```poetry add git+https://github.com/mtxslv/guira```.
+```poetry add guira```.
 
 # It seems amazing 🤩! But I have no idea how to start 😓. What should I do? 🧐
 
