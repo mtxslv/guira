@@ -22,11 +22,11 @@ file_names=('./tutorials/bounding_boxes/bounding_boxes.py'
             './tutorials/ultrasonic_sensor/ultrasonic_sensor.py')
 
 # simulation scenes to be downloaded
-simulation_scenes=('https://github.com/mtxslv/guira/blob/master/tutorials/bounding_boxes/bounding_boxes.ttt'
-                   'https://github.com/mtxslv/guira/blob/master/tutorials/connecting_to_a_scene/connecting_to_a_scene.ttt'
-                   'https://github.com/mtxslv/guira/blob/master/tutorials/move_robots/move_robots.ttt'
-                   'https://github.com/mtxslv/guira/blob/master/tutorials/sending_points/sending_points.ttt'
-                   'https://github.com/mtxslv/guira/blob/master/tutorials/ultrasonic_sensor/ultrasonic_sensor.ttt')
+simulation_scenes=('https://raw.githubusercontent.com/mtxslv/guira/master/tutorials/bounding_boxes/bounding_boxes.ttt'
+                   'https://raw.githubusercontent.com/mtxslv/guira/master/tutorials/connecting_to_a_scene/connecting_to_a_scene.ttt'
+                   'https://raw.githubusercontent.com/mtxslv/guira/master/tutorials/move_robots/move_robots.ttt'
+                   'https://raw.githubusercontent.com/mtxslv/guira/master/tutorials/sending_points/sending_points.ttt'
+                   'https://raw.githubusercontent.com/mtxslv/guira/master/tutorials/ultrasonic_sensor/ultrasonic_sensor.ttt')
 
 # local simulation scenes
 simulation_names=('./tutorials/bounding_boxes/bounding_boxes.ttt'
